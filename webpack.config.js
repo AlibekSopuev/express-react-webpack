@@ -10,6 +10,11 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         filename: "[name].js"
     },
+    devServer: {
+        proxy: {
+            '/api': 'http://localhost:3000'
+        }
+    },
     plugins: [htmlPlugin],
     module: {
         rules: [
