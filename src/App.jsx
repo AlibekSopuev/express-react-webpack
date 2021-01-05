@@ -12,5 +12,10 @@ export const App = () => {
             console.log(result)
         });
     }, [])
-    return <div>WELCOME TO REACT APP!!</div>;
+
+    return (
+        <div>
+            WELCOME TO REACT APP!!
+        </div>
+    );
 };
