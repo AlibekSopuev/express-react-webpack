@@ -2,20 +2,22 @@ import React from 'react';
 import axios from "axios";
 
 export const App = () => {
+    let [products, setProducts] = React.useState([])
     React.useEffect(() => {
-        let fetchData = () => {
-            return new Promise(() => {
-                axios.get('api/todos');
-            })
+        let fetchData = async () => {
+            let result = await axios.get(
+                'api/todos',
+            );
+            setProducts(result.data)
         };
-        fetchData().then((result) => {
-            console.log(result)
-        });
+        fetchData();
     }, [])
+
+    let renderProds = products?.map(item => <div>{item.name}</div>)
 
     return (
         <div>
-            WELCOME TO REACT APP!!
+            {renderProds}
         </div>
     );
 };
