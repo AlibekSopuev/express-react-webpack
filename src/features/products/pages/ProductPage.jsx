@@ -1,33 +1,27 @@
-import React, {useState, useEffect} from 'react';
-import {useParams, useRouteMatch} from "react-router-dom";
-import axios from "axios";
+import React, {useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {productsActions} from "../reducer";
 
-export const ProductPage = (props) => {
+export const ProductPage = () => {
     const dispatch = useDispatch()
-    const { productsStore } = useSelector(state => {
+    const {readProduct} = useSelector(state => {
         return {
-            productsStore: state.productsStore,
+            readProduct: state.productsStore.readProduct,
         }
     })
     const {productId} = useParams();
-    let {url} = useRouteMatch();
-    let [product, setProduct] = useState([])
 
     useEffect(() => {
-        const fetchProduct = async () => {
-            let {data: productData} = await axios.get(`http://localhost:8080/api/todos/${productId}`)
-            setProduct(productData)
-        }
-        fetchProduct()
+        dispatch(productsActions.read.request({productId}))
     }, [productId])
 
     return (
         <div>
-            <div>{product.name && product.name}</div>
-            <div>{product.price && product.price}</div>
-            <div>{product.stocked && 'В наличии'}</div>
-            <div>{product.category && product.category}</div>
+            <div>{readProduct.name && readProduct.name}</div>
+            <div>{readProduct.price && readProduct.price}</div>
+            <div>{readProduct.stocked && 'В наличии'}</div>
+            <div>{readProduct.category && readProduct.category}</div>
         </div>
     )
 }

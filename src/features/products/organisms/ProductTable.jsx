@@ -5,7 +5,7 @@ import {productsActions} from "../reducer";
 
 let ProductTable = (props) => {
     const dispatch = useDispatch()
-    const { products } = useSelector(state => {
+    const {products} = useSelector(state => {
         return {
             products: state.productsStore.list,
         }
@@ -15,25 +15,19 @@ let ProductTable = (props) => {
         dispatch(productsActions.getProductsList.request())
     }, [])
 
-    let filteredProducts = products.filter((good) => {
-        if (!props.stocked) {
-            return good.name.includes(props.filterText)
-        }
-        return good.stocked && good.name.includes(props.filterText)
-    })
-    let rows = filteredProducts.map((good) => {
+    let rows = products.map((product) => {
         return <ProductRow
-            key={good.id}
-            name={good.name}
-            price={good.price}
-            id={good.id}
-            stocked={good.stocked}
+            key={product.id}
+            name={product.name}
+            price={product.price}
+            id={product.id}
+            stocked={product.stocked}
         />
     })
     return (
         <table>
             <tbody>
-                {rows}
+            {rows}
             </tbody>
         </table>
     )

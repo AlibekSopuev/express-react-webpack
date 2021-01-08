@@ -18,8 +18,7 @@ const readProduct = (productId) => axios.get(`api/todos/${productId}`)
 
 function* productsReadRequestSaga({payload = {}}) {
     try {
-        const {params} = payload
-        const {productId} = params
+        const {productId} = payload
         const res = yield call(readProduct, productId);
         yield put(productsActions.read.finish({...res.data}))
 

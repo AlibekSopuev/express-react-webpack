@@ -25,27 +25,30 @@ export const FunctionalSearchBar = props => {
         setPrice("")
     }
 
-    let handleChange = () => {
-        props.filterProducts(filterTextInput.current.value, checkbox.current.checked)
+    let filterProducts = () => {
+        dispatch(productsActions.filter.filter({
+            searchText: filterTextInput.current.value,
+            stocked: checkbox.current.checked
+        }))
+
     }
 
     return (
-        <div>
+        <>
             <form>
                 <input
                     style={{marginTop: '10px'}}
                     type="text"
                     placeholder="Поиск товара"
                     ref={filterTextInput}
-                    onChange={handleChange}
-                    value={props.filterText}
+                    onChange={filterProducts}
                 />
                 <div style={{marginTop: '10px', marginBottom: '10px'}}>
                     <input
                         type="checkbox"
                         ref={checkbox}
-                        onChange={handleChange}
-                        checked={props.stocked}
+                        onChange={filterProducts}
+                        defaultChecked={false}
                     />
                     {" "}Товары в наличии
                 </div>
@@ -68,6 +71,6 @@ export const FunctionalSearchBar = props => {
                 </button>
 
             </form>
-        </div>
+        </>
     )
 }

@@ -4,7 +4,7 @@ const namespace = 'products'
 
 const initialState = {
     list: [],
-    readProduct: null,
+    readProduct: {},
     isLoading: false,
     error: ''
 }
