@@ -1,8 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {useParams, useRouteMatch} from "react-router-dom";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
 
 export const ProductPage = (props) => {
+    const dispatch = useDispatch()
+    const { productsStore } = useSelector(state => {
+        return {
+            productsStore: state.productsStore,
+        }
+    })
     const {productId} = useParams();
     let {url} = useRouteMatch();
     let [product, setProduct] = useState([])

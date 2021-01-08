@@ -1,8 +1,21 @@
 import React from 'react';
 import ProductRow from "../molecules/ProductRow.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {productsActions} from "../reducer";
 
 let ProductTable = (props) => {
-    let filteredProducts = props.goods.filter((good) => {
+    const dispatch = useDispatch()
+    const { products } = useSelector(state => {
+        return {
+            products: state.productsStore.list,
+        }
+    })
+
+    React.useEffect(() => {
+        dispatch(productsActions.getProductsList.request())
+    }, [])
+
+    let filteredProducts = products.filter((good) => {
         if (!props.stocked) {
             return good.name.includes(props.filterText)
         }
@@ -15,8 +28,6 @@ let ProductTable = (props) => {
             price={good.price}
             id={good.id}
             stocked={good.stocked}
-            deleteProduct={props.deleteProduct}
-            editProduct={props.editProduct}
         />
     })
     return (

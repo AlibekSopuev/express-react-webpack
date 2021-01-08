@@ -1,7 +1,15 @@
 import React, {useState, useRef} from 'react';
 import {useHistory, useRouteMatch, Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {productsActions} from "../reducer";
 
 let ProductRow = (props) => {
+    const dispatch = useDispatch()
+    const {productsStore} = useSelector(state => {
+        return {
+            productsStore: state.productsStore,
+        }
+    })
     let history = useHistory();
     let {url} = useRouteMatch();
     let [edit, setEdit] = useState(false)
@@ -13,12 +21,16 @@ let ProductRow = (props) => {
     };
     let handleEditSubmit = (event) => {
         event.preventDefault();
-        props.editProduct(props.id, titleRef.current.value, priceRef.current.value);
+        dispatch(productsActions.update.request({
+            id: props.id,
+            title: titleRef.current.value,
+            price: priceRef.current.value
+        }))
         setEdit(false)
     };
 
     let handleDelete = () => {
-        props.deleteProduct(props.id)
+        dispatch(productsActions.delete.request({id: props.id}))
     };
 
     let goToProductPage = () => {

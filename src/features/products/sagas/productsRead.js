@@ -6,7 +6,6 @@ const fetchProducts = () => axios.get('api/todos')
 
 function* productsListRequestSaga({payload = {}}) {
     try {
-        const {params} = payload
         const res = yield call(fetchProducts);
         yield put(productsActions.getProductsList.finish({data: res.data}))
 

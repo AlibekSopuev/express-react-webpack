@@ -21,8 +21,6 @@ const commonRequest = (state, payload) => {
 const commonFinish = (state, payload) => {
     return {
         ...state,
-        list: [...payload.data],
-        error: '',
         progress: false,
         isLoading: false
     }
@@ -40,7 +38,15 @@ const commonFail = (state, payload) => {
 const symbiotes = {
     getProductsList: {
         request: commonRequest,
-        finish: commonFinish,
+        finish: (state, payload) => {
+            return {
+                ...state,
+                list: [...payload.data],
+                error: '',
+                progress: false,
+                isLoading: false
+            }
+        },
         fail: commonFail
     },
     create: {
@@ -72,7 +78,7 @@ const symbiotes = {
         fail: commonFail
     },
     filter: {
-        finish: (state, payload) => {
+        filter: (state, payload) => {
             const {searchText, stocked} = payload;
             let filteredProducts = [...state.list].filter((product) => {
                 if (!stocked) {

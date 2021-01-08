@@ -9,8 +9,7 @@ const updateProduct = (id, title, price) => axios.put(`api/todos/${id}`, {
 
 function* productsUpdateSaga({payload = {}}) {
     try {
-        const {params} = payload
-        const {id, title, price} = params
+        const {id, title, price} = payload
         const res = yield call(updateProduct, id, title, price);
         yield put(productsActions.update.finish())
         yield put(productsActions.getProductsList.request())

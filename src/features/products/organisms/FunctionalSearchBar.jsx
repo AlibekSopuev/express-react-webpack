@@ -1,7 +1,9 @@
 import React from 'react';
-import axios from "axios";
+import {useDispatch} from "react-redux";
+import {productsActions} from "../reducer";
 
 export const FunctionalSearchBar = props => {
+    const dispatch = useDispatch()
     let [productName, setProductName] = React.useState("")
     let [price, setPrice] = React.useState("")
     let filterTextInput = React.useRef()
@@ -17,7 +19,7 @@ export const FunctionalSearchBar = props => {
     let handleSubmit = async (event) => {
         event.preventDefault();
         if (productName && price) {
-            props.addProduct(productName, price)
+            dispatch(productsActions.create.request({title: productName, price}))
         }
         setProductName("")
         setPrice("")

@@ -11,8 +11,7 @@ const createProduct = (title, price) => axios.post('api/todos',
 
 function* productsCreateSaga({payload = {}}) {
     try {
-        const {params} = payload
-        const {title, price} = params
+        const {title, price} = payload
         const res = yield call(createProduct, title, price);
         yield put(productsActions.create.finish())
         yield put(productsActions.getProductsList.request())

@@ -6,8 +6,7 @@ const deleteProduct = (productId) => axios.delete(`api/todos/${productId}`)
 
 function* productsDeleteSaga({payload = {}}) {
     try {
-        const {params} = payload
-        const {id} = params
+        const {id} = payload
         const res = yield call(deleteProduct, id);
         yield put(productsActions.delete.finish())
         yield put(productsActions.getProductsList.request())
