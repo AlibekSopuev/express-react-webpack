@@ -8,12 +8,8 @@ function* productsDeleteSaga({payload = {}}) {
     try {
         const {id} = payload
         const res = yield call(deleteProduct, id);
-        if (res.data.error) {
-            yield put(productsActions.delete.fail(res.data.error))
-        } else {
-            yield put(productsActions.delete.finish())
-            yield put(productsActions.getProductsList.request())
-        }
+        yield put(productsActions.delete.finish())
+        yield put(productsActions.getProductsList.request())
     } catch (error) {
         yield put(productsActions.delete.fail(error))
     }
