@@ -1,6 +1,6 @@
 import {productsActions} from "../reducer";
 import {call, put, takeEvery} from "@redux-saga/core/effects";
-import axios from "axios";
+import axios from "../../../utils/axios-config";
 
 const updateProduct = (id, title, price) => axios.put(`api/todos/${id}`, {
     title,

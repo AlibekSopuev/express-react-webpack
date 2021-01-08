@@ -26,11 +26,7 @@ export const FunctionalSearchBar = props => {
     }
 
     let filterProducts = () => {
-        dispatch(productsActions.filter.filter({
-            searchText: filterTextInput.current.value,
-            stocked: checkbox.current.checked
-        }))
-
+        props.filterProducts(filterTextInput.current.value, checkbox.current.checked)
     }
 
     return (
@@ -42,13 +38,14 @@ export const FunctionalSearchBar = props => {
                     placeholder="Поиск товара"
                     ref={filterTextInput}
                     onChange={filterProducts}
+                    value={props.filterText}
                 />
                 <div style={{marginTop: '10px', marginBottom: '10px'}}>
                     <input
                         type="checkbox"
                         ref={checkbox}
                         onChange={filterProducts}
-                        defaultChecked={false}
+                        checked={props.stocked}
                     />
                     {" "}Товары в наличии
                 </div>

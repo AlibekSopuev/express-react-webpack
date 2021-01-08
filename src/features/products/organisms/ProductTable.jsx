@@ -15,7 +15,14 @@ let ProductTable = (props) => {
         dispatch(productsActions.getProductsList.request())
     }, [])
 
-    let rows = products.map((product) => {
+    let filteredProducts = products.filter((product) => {
+        if (!props.stocked) {
+            return product.name.includes(props.filterText)
+        }
+        return product.stocked && product.name.includes(props.filterText)
+    })
+
+    let rows = filteredProducts.map((product) => {
         return <ProductRow
             key={product.id}
             name={product.name}

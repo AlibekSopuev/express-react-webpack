@@ -1,6 +1,6 @@
 import {productsActions} from "../reducer";
-import {call, put, takeEvery} from "@redux-saga/core/effects";
-import axios from "axios";
+import {all, call, put, takeEvery} from "@redux-saga/core/effects";
+import axios from "../../../utils/axios-config";
 
 const fetchProducts = () => axios.get('api/todos')
 
@@ -27,7 +27,18 @@ function* productsReadRequestSaga({payload = {}}) {
     }
 }
 
+function* productsFilterRequestSaga({payload = {}}) {
+    try {
+        yield put(productsActions.filter.filter())
+    } catch (error) {
+        yield put(productsActions.filter.fail(error))
+    }
+}
+
 export const productsRead = function* () {
-    yield takeEvery([productsActions.getProductsList.request().type], productsListRequestSaga),
-        yield takeEvery([productsActions.read.request().type], productsReadRequestSaga)
+    yield all([
+        yield takeEvery([productsActions.getProductsList.request().type], productsListRequestSaga),
+        yield takeEvery([productsActions.read.request().type], productsReadRequestSaga),
+        yield takeEvery([productsActions.filter.request().type], productsFilterRequestSaga)
+    ])
 }

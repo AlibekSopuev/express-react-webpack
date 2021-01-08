@@ -1,6 +1,6 @@
 import {productsActions} from "../reducer";
 import {call, put, takeEvery} from "@redux-saga/core/effects";
-import axios from "axios";
+import axios from "../../../utils/axios-config";
 
 const deleteProduct = (productId) => axios.delete(`api/todos/${productId}`)
 

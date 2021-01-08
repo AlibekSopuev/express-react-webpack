@@ -6,7 +6,9 @@ const initialState = {
     list: [],
     readProduct: {},
     isLoading: false,
-    error: ''
+    error: '',
+    searchText: '',
+    stocked: false
 }
 
 const commonRequest = (state, payload) => {
@@ -78,19 +80,27 @@ const symbiotes = {
         fail: commonFail
     },
     filter: {
-        filter: (state, payload) => {
+        request: (state, payload) => {
             const {searchText, stocked} = payload;
+            return {
+                ...state,
+                searchText,
+                stocked
+            }
+        },
+        filter: (state) => {
             let filteredProducts = [...state.list].filter((product) => {
-                if (!stocked) {
-                    return product.name.includes(searchText)
+                if (!state.stocked) {
+                    return product.name.includes(state.searchText)
                 }
-                return product.stocked && product.name.includes(searchText)
+                return product.stocked && product.name.includes(state.searchText)
             })
             return {
                 ...state,
                 list: [...filteredProducts]
             }
-        }
+        },
+        fail: commonFail
     },
 }
 
