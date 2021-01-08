@@ -11,8 +11,12 @@ function* productsUpdateSaga({payload = {}}) {
     try {
         const {id, title, price} = payload
         const res = yield call(updateProduct, id, title, price);
-        yield put(productsActions.update.finish())
-        yield put(productsActions.getProductsList.request())
+        if (res.data.error) {
+            yield put(productsActions.update.fail(res.data.error))
+        } else {
+            yield put(productsActions.update.finish())
+            yield put(productsActions.getProductsList.request())
+        }
     } catch (error) {
         yield put(productsActions.update.fail(error))
     }

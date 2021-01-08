@@ -7,8 +7,11 @@ const fetchProducts = () => axios.get('api/todos')
 function* productsListRequestSaga({payload = {}}) {
     try {
         const res = yield call(fetchProducts);
-        yield put(productsActions.getProductsList.finish({data: res.data}))
-
+        if (res.data.error) {
+            yield put(productsActions.getProductsList.fail(res.data.error))
+        } else {
+            yield put(productsActions.getProductsList.finish({data: res.data}))
+        }
     } catch (error) {
         yield put(productsActions.getProductsList.fail(error))
     }
@@ -20,8 +23,11 @@ function* productsReadRequestSaga({payload = {}}) {
     try {
         const {productId} = payload
         const res = yield call(readProduct, productId);
-        yield put(productsActions.read.finish({...res.data}))
-
+        if (res.data.error) {
+            yield put(productsActions.read.fail(res.data.error))
+        } else {
+            yield put(productsActions.read.finish({...res.data}))
+        }
     } catch (error) {
         yield put(productsActions.read.fail(error))
     }

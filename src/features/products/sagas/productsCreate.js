@@ -13,9 +13,12 @@ function* productsCreateSaga({payload = {}}) {
     try {
         const {title, price} = payload
         const res = yield call(createProduct, title, price);
-        yield put(productsActions.create.finish())
-        yield put(productsActions.getProductsList.request())
-
+        if (res.data.error) {
+            yield put(productsActions.create.fail(res.data.error))
+        } else {
+            yield put(productsActions.create.finish())
+            yield put(productsActions.getProductsList.request())
+        }
     } catch (error) {
         yield put(productsActions.create.fail(error))
     }
