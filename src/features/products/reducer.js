@@ -1,0 +1,76 @@
+import {createSymbiote} from 'redux-symbiote'
+
+const namespace = 'products'
+
+const initialState = {
+    list: [],
+    readProduct: null,
+    isLoading: false,
+    error: ''
+}
+
+const commonRequest = (state, payload) => {
+    return {
+        ...state,
+        payload,
+        progress: true,
+        isLoading: true
+    }
+}
+
+const commonFinish = (state, payload) => {
+    return {
+        ...state,
+        list: [...payload.data],
+        error: '',
+        progress: false,
+        isLoading: false
+    }
+}
+
+const commonFail = (state, payload) => {
+    return {
+        ...state,
+        error: payload.error,
+        progress: false,
+        isLoading: false
+    }
+}
+
+const symbiotes = {
+    getProductsList: {
+        request: commonRequest,
+        finish: commonFinish,
+        fail: commonFail
+    },
+    create: {
+        request: commonRequest,
+        finish: commonFinish,
+        fail: commonFail
+    },
+    read: {
+        request: commonRequest,
+        finish: (state, payload) => {
+            return {
+                ...state,
+                readProduct: {...payload},
+                error: '',
+                progress: false,
+                isLoading: false
+            }
+        },
+        fail: commonFail
+    },
+    update: {
+        request: commonRequest,
+        finish: commonFinish,
+        fail: commonFail
+    },
+    delete: {
+        request: commonRequest,
+        finish: commonFinish,
+        fail: commonFail
+    },
+}
+
+export const {actions: productsActions, reducer: productsStore} = createSymbiote(initialState, symbiotes, namespace)
