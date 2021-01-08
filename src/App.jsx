@@ -1,21 +1,16 @@
 import React from 'react';
-import {
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import {FilterableProductTable} from "./features/products/pages/FilterableProductTable.jsx";
 import {ProductPage} from "./features/products/pages/ProductPage.jsx";
 
 export const App = () => {
     return (
         <>
-            <Link to={'/products'}>Посмотреть продукты</Link>
             <Switch>
-                <Route exact path={'/products'}>
+                <Route exact path={'/'}>
                     <FilterableProductTable/>
                 </Route>
-                <Route path={'/products/:productId'}>
+                <Route path={'/:productId'}>
                     <ProductPage/>
                 </Route>
             </Switch>

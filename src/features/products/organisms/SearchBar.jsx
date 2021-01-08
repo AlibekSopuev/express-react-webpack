@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch} from "react-redux";
 import {productsActions} from "../reducer";
 
-export const FunctionalSearchBar = props => {
+export const SearchBar = props => {
     const dispatch = useDispatch()
     let [productName, setProductName] = React.useState("")
     let [price, setPrice] = React.useState("")

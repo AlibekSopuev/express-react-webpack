@@ -1,12 +1,11 @@
 import React, {useState, useRef} from 'react';
-import {useHistory, useRouteMatch, Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {productsActions} from "../reducer";
 
-let ProductRow = (props) => {
+export const ProductRow = (props) => {
     const dispatch = useDispatch()
     let history = useHistory();
-    let {url} = useRouteMatch();
     let [edit, setEdit] = useState(false)
     let titleRef = useRef();
     let priceRef = useRef();
@@ -29,7 +28,7 @@ let ProductRow = (props) => {
     };
 
     let goToProductPage = () => {
-        history.push(`${url}/${props.id}`)
+        history.push(`/${props.id}`)
     }
 
     return (
@@ -81,6 +80,3 @@ let ProductRow = (props) => {
         </tr>
     )
 }
-
-
-export default ProductRow;

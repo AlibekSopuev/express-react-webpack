@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../reducer";
 
@@ -17,11 +17,12 @@ export const ProductPage = () => {
     }, [productId])
 
     return (
-        <div>
+        <>
+            <Link to={'/'}>Вернуться к списку продуктов</Link>
             <div>{readProduct.name && readProduct.name}</div>
             <div>{readProduct.price && readProduct.price}</div>
-            <div>{readProduct.stocked && 'В наличии'}</div>
+            <div>{readProduct.stocked ? 'В наличии' : 'Нет в наличии'}</div>
             <div>{readProduct.category && readProduct.category}</div>
-        </div>
+        </>
     )
 }

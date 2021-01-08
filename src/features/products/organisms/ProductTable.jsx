@@ -1,9 +1,9 @@
 import React from 'react';
-import ProductRow from "../molecules/ProductRow.jsx";
+import {ProductRow} from "../molecules/ProductRow.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../reducer";
 
-let ProductTable = (props) => {
+const ProductTable = (props) => {
     const dispatch = useDispatch()
     const {products} = useSelector(state => {
         return {
