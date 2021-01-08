@@ -19,7 +19,7 @@ export const ProductPage = () => {
     return (
         <>
             <Link to={'/'}>Вернуться к списку продуктов</Link>
-            <div>{readProduct.name && readProduct.name}</div>
+            <div>{readProduct?.name}</div>
             <div>{readProduct.price && readProduct.price}</div>
             <div>{readProduct.stocked ? 'В наличии' : 'Нет в наличии'}</div>
             <div>{readProduct.category && readProduct.category}</div>
