@@ -24,7 +24,7 @@ export const FunctionalSearchBar = props => {
     }
 
     let handleChange = () => {
-        props.handleUserInput(filterTextInput.current.value, checkbox.current.checked)
+        props.filterProducts(filterTextInput.current.value, checkbox.current.checked)
     }
 
     return (

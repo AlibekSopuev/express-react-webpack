@@ -71,6 +71,21 @@ const symbiotes = {
         finish: commonFinish,
         fail: commonFail
     },
+    filter: {
+        finish: (state, payload) => {
+            const {searchText, stocked} = payload;
+            let filteredProducts = [...state.list].filter((product) => {
+                if (!stocked) {
+                    return product.name.includes(searchText)
+                }
+                return product.stocked && product.name.includes(searchText)
+            })
+            return {
+                ...state,
+                list: [...filteredProducts]
+            }
+        }
+    },
 }
 
 export const {actions: productsActions, reducer: productsStore} = createSymbiote(initialState, symbiotes, namespace)

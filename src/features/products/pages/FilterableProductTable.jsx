@@ -60,25 +60,26 @@ export const FilterableProductTable = props => {
         setProducts([...products, newProduct])
     }
 
-    let handleUserInput = (searchText, checked) => {
+    let filterProducts = (searchText, checked) => {
         setFilterText(searchText)
         setStocked(checked)
     }
+    // все функции и состояния можно удалить
 
     return (
         <div>
             <FunctionalSearchBar
-                filterText={filterText}
-                handleUserInput={handleUserInput}
-                stocked={stocked}
-                addProduct={addProduct}
+                filterText={filterText} // no need
+                filterProducts={filterProducts} // no need
+                stocked={stocked} // no need
+                addProduct={addProduct} // no need
             />
             <ProductTable
-                goods={products}
-                filterText={filterText}
-                stocked={stocked}
-                deleteProduct={deleteProduct}
-                editProduct={editProduct}
+                goods={products} // no need
+                filterText={filterText} // no need
+                stocked={stocked} // no need
+                deleteProduct={deleteProduct} // no need
+                editProduct={editProduct} // no need
             />
         </div>
     )
