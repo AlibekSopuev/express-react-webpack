@@ -5,11 +5,6 @@ import {productsActions} from "../reducer";
 
 let ProductRow = (props) => {
     const dispatch = useDispatch()
-    const {productsStore} = useSelector(state => {
-        return {
-            productsStore: state.productsStore,
-        }
-    })
     let history = useHistory();
     let {url} = useRouteMatch();
     let [edit, setEdit] = useState(false)
