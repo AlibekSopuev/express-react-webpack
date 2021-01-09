@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductTable from "../organisms/ProductTable.jsx";
 import {SearchBar} from "../organisms/SearchBar.jsx";
+import {CreateProductForm} from "../organisms/CreateProductForm.jsx";
 
 export const FilterableProductTable = () => {
     const [filterText, setFilterText] = React.useState("")
@@ -17,6 +18,7 @@ export const FilterableProductTable = () => {
                 stocked={stocked}
                 filterProducts={filterProducts}
             />
+            <CreateProductForm/>
             <ProductTable
                 filterText={filterText}
                 stocked={stocked}
