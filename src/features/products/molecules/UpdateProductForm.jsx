@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import {useDispatch} from "react-redux";
 import {productsActions} from "../reducer";
 import styled from 'styled-components'

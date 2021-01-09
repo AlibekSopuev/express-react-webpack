@@ -1,46 +1,116 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
 import {productsActions} from "../reducer";
+import {Formik} from 'formik';
+import * as Yup from "yup";
+import styled from "styled-components";
 
-export const CreateProductForm = () => {
+export const CreateProductForm = (props) => {
     const dispatch = useDispatch()
-    let [productName, setProductName] = React.useState("")
-    let [price, setPrice] = React.useState("")
-
-    let createProductPrice = (event) => {
-        setPrice(event.target.value)
-    }
-    let createProductName = (event) => {
-        setProductName(event.target.value)
-    }
-
-    let createProduct = async (event) => {
-        event.preventDefault();
-        if (productName && price) {
-            dispatch(productsActions.create.request({title: productName, price}))
-        }
-        setProductName("")
-        setPrice("")
+    const createProduct = async (values) => {
+        dispatch(productsActions.create.request({
+            title: values.productName,
+            price: values.productPrice
+        }))
+        props.handleClosePopup()
     }
 
     return (
-        <form onSubmit={createProduct}>
-            <input
-                type="text"
-                placeholder="Product Name"
-                value={productName}
-                onChange={createProductName}
-            />
-            <input
-                type="text"
-                placeholder="Product price"
-                value={price}
-                onChange={createProductPrice}
-            />
-            <button type="submit">
-                Добавить товар
-            </button>
-        </form>
-
+        <PopupWrapper>
+            <Popup>
+                <Formik
+                    initialValues={{productName: '', productPrice: ''}}
+                    onSubmit={createProduct}
+                    validationSchema={Yup.object().shape({
+                        productName: Yup.string()
+                            .required("Необходимо указать название продукта"),
+                        productPrice: Yup.number()
+                            .required("Необходимо указать цену продукта")
+                    })}
+                >
+                    {({handleSubmit, touched, errors, values, handleChange, dirty}) => (
+                        <form onSubmit={handleSubmit}>
+                            <InputWrapper>
+                                <label>Название продукта</label>
+                                <StyledInput
+                                    name="productName"
+                                    id="productName"
+                                    type="text"
+                                    placeholder="Название продукта"
+                                    value={values.productName}
+                                    onChange={handleChange}
+                                    className={errors.productName && touched.productName && "error"}
+                                />
+                                {errors.productName && touched.productName && (
+                                    <ErrorText className="input-feedback">{errors.productName}</ErrorText>
+                                )}
+                            </InputWrapper>
+                            <InputWrapper>
+                                <label>Цена продукта</label>
+                                <StyledInput
+                                    name="productPrice"
+                                    id="productPrice"
+                                    type="text"
+                                    placeholder="Цена продукта"
+                                    value={values.productPrice}
+                                    onChange={handleChange}
+                                    className={errors.productPrice && touched.productPrice && "error"}
+                                />
+                                {errors.productPrice && touched.productPrice && (
+                                    <ErrorText className="input-feedback">{errors.productPrice}</ErrorText>
+                                )}
+                            </InputWrapper>
+                            <button type="submit">
+                                Добавить товар
+                            </button>
+                            <button onClick={props.handleClosePopup}>
+                                Отмена
+                            </button>
+                        </form>
+                    )}
+                </Formik>
+            </Popup>
+        </PopupWrapper>
     )
 }
+
+const PopupWrapper = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0,0,0, 0.5);
+`
+const Popup = styled.div`
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  background: white;
+`
+
+const InputWrapper = styled.div`
+  margin-bottom: 20px;
+  & > label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+`
+const ErrorText = styled.div`
+  color: red;
+  margin-top: .25rem;
+`
+const StyledInput = styled.input`
+  border-color: ${props => props.className?.includes('error') && "red"};
+`

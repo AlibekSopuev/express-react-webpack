@@ -24,7 +24,8 @@
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
     "redux-symbiote": "^3.4.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
