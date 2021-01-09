@@ -31,6 +31,5 @@ export const SearchBar = props => {
                 {" "}Товары в наличии
             </div>
         </form>
-
     )
 }

@@ -42,7 +42,7 @@ export const CreateProductForm = (props) => {
                                     className={errors.productName && touched.productName && "error"}
                                 />
                                 {errors.productName && touched.productName && (
-                                    <ErrorText className="input-feedback">{errors.productName}</ErrorText>
+                                    <ErrorText>{errors.productName}</ErrorText>
                                 )}
                             </InputWrapper>
                             <InputWrapper>
@@ -57,7 +57,7 @@ export const CreateProductForm = (props) => {
                                     className={errors.productPrice && touched.productPrice && "error"}
                                 />
                                 {errors.productPrice && touched.productPrice && (
-                                    <ErrorText className="input-feedback">{errors.productPrice}</ErrorText>
+                                    <ErrorText>{errors.productPrice}</ErrorText>
                                 )}
                             </InputWrapper>
                             <button type="submit">
