@@ -9,7 +9,7 @@ export const ProductRow = (props) => {
     let history = useHistory();
     let [isEdited, setEdited] = useState(false)
 
-    let handleEditedState = () => {
+    let handleToggleEditPopup = () => {
         setEdited(!isEdited)
     };
 
@@ -31,7 +31,7 @@ export const ProductRow = (props) => {
                     {props.price}
                 </td>
                 <td>
-                    <button onClick={handleEditedState}>
+                    <button onClick={handleToggleEditPopup}>
                         Редактировать
                     </button>
                 </td>
@@ -46,7 +46,7 @@ export const ProductRow = (props) => {
                     id={props.id}
                     name={props.name}
                     price={props.price}
-                    handleEditedState={handleEditedState}
+                    handleToggleEditPopup={handleToggleEditPopup}
                 />
             }
         </>

@@ -10,10 +10,25 @@ import {
 
 store.runSaga(rootSaga)
 
+const themes = {
+    light: {
+        foreground: "#000000",
+        background: "#eeeeee"
+    },
+    dark: {
+        foreground: "#ffffff",
+        background: "#222222"
+    }
+};
+
+export const ThemeContext = React.createContext(themes.light);
+
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-            <App/>
+            <ThemeContext.Provider value={themes.dark}>
+                <App/>
+            </ThemeContext.Provider>
         </Router>
     </Provider>,
     document.getElementById('app'));

@@ -3,22 +3,27 @@ import {useDispatch} from "react-redux";
 import {productsActions} from "../reducer";
 import styled from 'styled-components'
 import {Formik} from 'formik';
+import {useOnClickOutside} from "../../../utils/hooks";
 
 
 export const UpdateProductForm = (props) => {
     const dispatch = useDispatch()
+    const ref = React.useRef();
+
+    useOnClickOutside(ref, props.handleToggleEditPopup);
+
     let updateProduct = (values) => {
         dispatch(productsActions.update.request({
             id: props.id,
             title: values.productName,
             price: values.productPrice
         }))
-        props.handleEditedState()
+        props.handleToggleEditPopup()
     };
 
     return (
         <PopupWrapper>
-            <Popup>
+            <Popup ref={ref}>
                 <Formik
                     initialValues={{productName: props.name, productPrice: props.price}}
                     onSubmit={updateProduct}
@@ -51,7 +56,7 @@ export const UpdateProductForm = (props) => {
                                 <button type="submit" disabled={!dirty}>
                                     Сохранить изменения
                                 </button>
-                                <button onClick={props.handleEditedState}>
+                                <button onClick={props.handleToggleEditPopup}>
                                     Отмена
                                 </button>
                             </InputWrapper>

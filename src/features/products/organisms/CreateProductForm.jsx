@@ -4,9 +4,11 @@ import {productsActions} from "../reducer";
 import {Formik} from 'formik';
 import * as Yup from "yup";
 import styled from "styled-components";
+import {useOnClickOutside} from "../../../utils/hooks";
 
 export const CreateProductForm = (props) => {
     const dispatch = useDispatch()
+    const ref = React.useRef();
     const createProduct = async (values) => {
         dispatch(productsActions.create.request({
             title: values.productName,
@@ -15,9 +17,11 @@ export const CreateProductForm = (props) => {
         props.handleClosePopup()
     }
 
+    useOnClickOutside(ref, props.handleClosePopup);
+
     return (
         <PopupWrapper>
-            <Popup>
+            <Popup ref={ref}>
                 <Formik
                     initialValues={{productName: '', productPrice: ''}}
                     onSubmit={createProduct}

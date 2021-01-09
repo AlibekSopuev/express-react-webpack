@@ -3,14 +3,16 @@ import ProductTable from "../organisms/ProductTable.jsx";
 import {SearchBar} from "../organisms/SearchBar.jsx";
 import {CreateProductForm} from "../organisms/CreateProductForm.jsx";
 import styled from "styled-components";
+import {ThemeContext} from "../../../index";
 
 export const FilterableProductTable = () => {
     const [filterText, setFilterText] = React.useState("")
     const [stocked, setStocked] = React.useState(false)
-    let [isCreateProduct, setCreateProduct] = React.useState(false)
+    let [isCreatePopupShown, setCreatePopupShown] = React.useState(false)
+    const theme = React.useContext(ThemeContext);
 
-    let handleTogglePopup = () => {
-        setCreateProduct(!isCreateProduct)
+    let handleToggleCreatePopup = () => {
+        setCreatePopupShown(!isCreatePopupShown)
     };
 
     let filterProducts = (searchText, checked) => {
@@ -20,7 +22,7 @@ export const FilterableProductTable = () => {
 
     return (
         <>
-            <StyledButton onClick={handleTogglePopup}>
+            <StyledButton onClick={handleToggleCreatePopup} theme={theme}>
                 Добавить новый продукт в список
             </StyledButton>
             <SearchBar
@@ -32,7 +34,7 @@ export const FilterableProductTable = () => {
                 filterText={filterText}
                 stocked={stocked}
             />
-            {isCreateProduct && <CreateProductForm handleClosePopup={handleTogglePopup}/>}
+            {isCreatePopupShown && <CreateProductForm handleClosePopup={handleToggleCreatePopup}/>}
         </>
     )
 }
@@ -40,4 +42,6 @@ export const FilterableProductTable = () => {
 const StyledButton = styled.button`
   margin-top: 10px;
   margin-bottom: 10px;
+  background: ${({theme}) => theme.background};
+  color: ${({theme}) => theme.foreground};
 `
