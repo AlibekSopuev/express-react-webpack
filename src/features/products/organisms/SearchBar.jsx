@@ -1,9 +1,6 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
-import {productsActions} from "../reducer";
 
 export const SearchBar = props => {
-    const dispatch = useDispatch()
     let filterTextInput = React.useRef()
     let checkbox = React.useRef()
 
