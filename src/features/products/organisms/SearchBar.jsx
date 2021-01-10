@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from "styled-components";
 
 export const SearchBar = props => {
     let filterTextInput = React.useRef()
@@ -18,15 +19,21 @@ export const SearchBar = props => {
                 onChange={filterProducts}
                 value={props.filterText}
             />
-            <div style={{marginTop: '10px', marginBottom: '10px'}}>
+            <InputWrapper>
                 <input
                     type="checkbox"
                     ref={checkbox}
+                    id="stocked"
                     onChange={filterProducts}
                     checked={props.stocked}
                 />
-                {" "}Товары в наличии
-            </div>
+                <label htmlFor="stocked">Товары в наличии</label>
+            </InputWrapper>
         </form>
     )
 }
+
+const InputWrapper = styled.div`
+  margin-bottom: 10px;
+  margin-top: 10px;
+`

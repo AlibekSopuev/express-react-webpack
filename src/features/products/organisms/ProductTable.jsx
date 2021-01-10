@@ -3,7 +3,7 @@ import {ProductRow} from "../molecules/ProductRow.jsx";
 import {useProductsQuery} from "../queries/useProductsQuery";
 
 const ProductTable = (props) => {
-    const {products} = useProductsQuery()
+    const {products, isFetching} = useProductsQuery()
     let filteredProducts = products?.filter((product) => {
         if (!props.stocked) {
             return product.name.includes(props.filterText)
@@ -20,12 +20,16 @@ const ProductTable = (props) => {
             stocked={product.stocked}
         />
     })
-    return (
-        <table>
-            <tbody>
-            {rows}
-            </tbody>
-        </table>
-    )
+    return isFetching ?
+        (
+            <div>Loading...</div>
+        ) :
+        (
+            <table>
+                <tbody>
+                {rows}
+                </tbody>
+            </table>
+        )
 }
 export default ProductTable;
