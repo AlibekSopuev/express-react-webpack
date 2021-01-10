@@ -11,14 +11,15 @@ export const SearchBar = props => {
 
     return (
         <form>
-            <input
-                style={{marginTop: '10px'}}
-                type="text"
-                placeholder="Поиск товара"
-                ref={filterTextInput}
-                onChange={filterProducts}
-                value={props.filterText}
-            />
+            <InputWrapper>
+                <input
+                    type="text"
+                    placeholder="Поиск товара"
+                    ref={filterTextInput}
+                    onChange={filterProducts}
+                    value={props.filterText}
+                />
+            </InputWrapper>
             <InputWrapper>
                 <input
                     type="checkbox"
@@ -36,4 +37,7 @@ export const SearchBar = props => {
 const InputWrapper = styled.div`
   margin-bottom: 10px;
   margin-top: 10px;
+  & > input {
+    margin-right: 5px;
+  }
 `
