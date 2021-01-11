@@ -2,7 +2,7 @@ import React from 'react';
 import {ProductRow} from "../molecules/ProductRow.jsx";
 import {useProductsQuery} from "../queries/useProductsQuery";
 
-const ProductTable = (props) => {
+export const ProductTable = (props) => {
     const {products, isFetching} = useProductsQuery()
     let filteredProducts = products?.filter((product) => {
         if (!props.stocked) {
@@ -25,11 +25,10 @@ const ProductTable = (props) => {
             <div>Loading...</div>
         ) :
         (
-            <table>
+            <table className={props.className}>
                 <tbody>
                 {rows}
                 </tbody>
             </table>
         )
 }
-export default ProductTable;
