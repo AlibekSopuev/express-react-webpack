@@ -1,14 +1,23 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../reducer";
 
-export const SearchBar = props => {
+export const SearchBar = () => {
     const dispatch = useDispatch()
     let filterTextInput = React.useRef()
     let checkbox = React.useRef()
+    const {searchText, stocked} = useSelector(state => {
+        return {
+            searchText: state.productsStore.searchText,
+            stocked: state.productsStore.stocked,
+        }
+    })
 
     let filterProducts = () => {
-        props.filterProducts(filterTextInput.current.value, checkbox.current.checked)
+        dispatch(productsActions.filter.request({
+            searchText: filterTextInput.current.value,
+            stocked: checkbox.current.checked
+        }))
     }
 
     return (
@@ -19,14 +28,14 @@ export const SearchBar = props => {
                 placeholder="Поиск товара"
                 ref={filterTextInput}
                 onChange={filterProducts}
-                value={props.filterText}
+                value={searchText}
             />
             <div style={{marginTop: '10px', marginBottom: '10px'}}>
                 <input
                     type="checkbox"
                     ref={checkbox}
                     onChange={filterProducts}
-                    checked={props.stocked}
+                    checked={stocked}
                 />
                 {" "}Товары в наличии
             </div>

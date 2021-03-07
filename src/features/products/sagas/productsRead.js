@@ -3,10 +3,12 @@ import {all, call, put, takeEvery} from "@redux-saga/core/effects";
 import axios from "../../../utils/axios-config";
 
 const fetchProducts = () => axios.get('api/todos')
+const fetchLibraries = () => axios.get('opendata/7705851331-stat_library/data-2016-11-10T00-00-00-structure-2016-09-12T00-00-00.json')
 
 function* productsListRequestSaga({payload = {}}) {
     try {
         const res = yield call(fetchProducts);
+        const resp = yield call(fetchLibraries);
         if (res.data.error) {
             yield put(productsActions.getProductsList.fail(res.data.error))
         } else {
@@ -45,6 +47,5 @@ export const productsRead = function* () {
     yield all([
         yield takeEvery([productsActions.getProductsList.request().type], productsListRequestSaga),
         yield takeEvery([productsActions.read.request().type], productsReadRequestSaga),
-        yield takeEvery([productsActions.filter.request().type], productsFilterRequestSaga)
     ])
 }

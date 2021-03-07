@@ -12,7 +12,12 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/api': 'http://localhost:3000'
+            '/api': 'http://localhost:3000',
+            '/opendata': {
+                target: 'https://data.gov.ru/sites/default/files',
+                changeOrigin: true,
+                secure: false,
+            },
         }
     },
     plugins: [htmlPlugin],

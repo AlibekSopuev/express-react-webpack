@@ -87,20 +87,7 @@ const symbiotes = {
                 searchText,
                 stocked
             }
-        },
-        filter: (state) => {
-            let filteredProducts = [...state.list].filter((product) => {
-                if (!state.stocked) {
-                    return product.name.includes(state.searchText)
-                }
-                return product.stocked && product.name.includes(state.searchText)
-            })
-            return {
-                ...state,
-                list: [...filteredProducts]
-            }
-        },
-        fail: commonFail
+        }
     },
 }
 

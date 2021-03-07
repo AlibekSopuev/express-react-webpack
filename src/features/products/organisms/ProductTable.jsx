@@ -3,26 +3,32 @@ import {ProductRow} from "../molecules/ProductRow.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {productsActions} from "../reducer";
 
-const ProductTable = (props) => {
+const ProductTable = () => {
     const dispatch = useDispatch()
-    const {products} = useSelector(state => {
-        return {
-            products: state.productsStore.list,
-        }
-    })
+    const getSearchText = state => state.productsStore.searchText;
+    const getStocked = state => state.productsStore.stocked;
+    const getItems = state => state.productsStore.list;
+
+    const getFilteredItems = state => {
+        const searchText = getSearchText(state);
+        const stocked = getStocked(state);
+        const items = getItems(state);
+
+        return Object.values(items).filter((product) => {
+            if (!stocked) {
+                return product.name.includes(searchText)
+            }
+            return product.stocked && product.name.includes(searchText)
+        })
+    }
+
+    const products = useSelector(getFilteredItems)
 
     React.useEffect(() => {
         dispatch(productsActions.getProductsList.request())
     }, [])
 
-    let filteredProducts = products.filter((product) => {
-        if (!props.stocked) {
-            return product.name.includes(props.filterText)
-        }
-        return product.stocked && product.name.includes(props.filterText)
-    })
-
-    let rows = filteredProducts.map((product) => {
+    let rows = products.map((product) => {
         return <ProductRow
             key={product.id}
             name={product.name}
